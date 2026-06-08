@@ -1,0 +1,51 @@
+name: Generate Token Dashboard
+
+on:
+  schedule:
+    # 01:30 UTC — runs after the Claude Code routine (00:00 BST = 23:00 UTC)
+    - cron: '30 1 * * *'
+  # Also triggers when the routine pushes new analyses
+  push:
+    paths:
+      - 'analyses/**'
+      - 'data/sessions_export.json'
+  workflow_dispatch:
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Verify data exists
+        run: |
+          if [ ! -f "data/sessions_export.json" ]; then
+            echo "ERROR: data/sessions_export.json missing. Run the PowerShell exporter first."
+            exit 1
+          fi
+          echo "Token data found."
+          echo "Analysis files: $(ls analyses/*.json 2>/dev/null | wc -l)"
+
+      - name: Generate dashboard
+        run: python scripts/analyse.py
+
+      - name: Commit and push
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add docs/index.html
+          if git diff --staged --quiet; then
+            echo "No changes to dashboard."
+          else
+            git commit -m "Dashboard $(date -u '+%Y-%m-%d %H:%M UTC')"
+            git push
+          fi
