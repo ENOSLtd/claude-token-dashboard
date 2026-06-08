@@ -26,26 +26,31 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: Verify data exists
+      - name: Check for session data
+        id: check_data
         run: |
-          if [ ! -f "data/sessions_export.json" ]; then
-            echo "ERROR: data/sessions_export.json missing. Run the PowerShell exporter first."
-            exit 1
+          if [ -f "data/sessions_export.json" ]; then
+            echo "data_exists=true" >> $GITHUB_OUTPUT
+            echo "Session data found. Analysis files: $(ls analyses/*.json 2>/dev/null | wc -l)"
+          else
+            echo "data_exists=false" >> $GITHUB_OUTPUT
+            echo "No sessions_export.json present — dashboard already current, nothing to do."
           fi
-          echo "Token data found."
-          echo "Analysis files: $(ls analyses/*.json 2>/dev/null | wc -l)"
 
       - name: Generate dashboard
+        if: steps.check_data.outputs.data_exists == 'true'
         run: python scripts/analyse.py
 
       - name: Commit and push
+        if: steps.check_data.outputs.data_exists == 'true'
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add docs/index.html
+          git rm --ignore-unmatch data/sessions_export.json
           if git diff --staged --quiet; then
-            echo "No changes to dashboard."
+            echo "No changes to commit."
           else
-            git commit -m "Dashboard $(date -u '+%Y-%m-%d %H:%M UTC')"
+            git commit -m "Dashboard $(date -u '+%Y-%m-%d %H:%M UTC') [skip ci]"
             git push
           fi

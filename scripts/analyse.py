@@ -437,4 +437,9 @@ function toggleRow(row){{
 
 OUTPUT_FILE.write_text(html, encoding="utf-8")
 print(f"Dashboard written → {OUTPUT_FILE}")
+
+# Delete the raw session export — data processed into the dashboard, no need to persist
+if TOKEN_FILE.exists():
+    TOKEN_FILE.unlink()
+    print(f"Deleted raw export: {TOKEN_FILE}")
 print(f"Sessions: {len(sessions)}  |  Windows: {len(windows)}  |  LLM-analysed: {sum(1 for s in sessions if s['has_llm_analysis'])}")
