@@ -28,7 +28,7 @@ if not TOKEN_FILE.exists():
     print(f"ERROR: {TOKEN_FILE} not found. Run the PowerShell exporter first.")
     sys.exit(1)
 
-with open(TOKEN_FILE, encoding="utf-8") as f:
+with open(TOKEN_FILE, encoding="utf-8-sig") as f:  # utf-8-sig handles BOM from PowerShell
     token_data = json.load(f)
 
 sessions_raw  = token_data.get("sessions", [])
