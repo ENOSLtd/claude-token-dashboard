@@ -1,5 +1,5 @@
 ﻿{
-    "exported_at":  "2026-06-08T11:36:47.8178908+01:00",
+    "exported_at":  "2026-06-08T11:42:46.8207520+01:00",
     "estimated_limit":  88000,
     "days_exported":  90,
     "session_count":  4,
@@ -7,7 +7,7 @@
                      {
                          "session_id":  "2b4df636-4a56-4850-bb75-aca6f057cd68",
                          "type":  "claude_code",
-                         "title":  "Help me fix the issues reported by /doctor below. For each issue: briefly explai…",
+                         "title":  "Help me fix the issues reported by /doctor below. For each issue: briefly explai...",
                          "start_time":  "2026-05-07T09:35:51.101Z",
                          "model":  "claude-sonnet-4-6",
                          "input_tokens":  39,
