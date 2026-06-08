@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Claude Token Dashboard</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+  <style>
+    :root {
+      --bg:#0f172a;--card:#1e293b;--border:#334155;
+      --text:#e2e8f0;--muted:#94a3b8;--accent:#38bdf8;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+          background:var(--bg);color:var(--text);min-height:100vh}
+    header{background:var(--card);border-bottom:1px solid var(--border);
+            padding:1rem 2rem;display:flex;align-items:center;gap:1rem;flex-wrap:wrap}
+    header h1{font-size:1.1rem;font-weight:600;color:var(--accent)}
+    .meta{font-size:.7rem;color:var(--muted);margin-left:auto}
+    .container{max-width:1440px;margin:0 auto;padding:1.25rem 1.5rem}
+    .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:.75rem;margin-bottom:1rem}
+    .card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:1rem}
+    .card-label{font-size:.65rem;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+    .card-value{font-size:1.6rem;font-weight:700;margin-top:.2rem}
+    .card-sub{font-size:.65rem;color:var(--muted);margin-top:.2rem}
+    .daily-banner{background:#1a2e1a;border:1px solid #166534;border-radius:8px;
+                   padding:1rem 1.25rem;margin-bottom:1rem}
+    .banner-label{font-size:.65rem;color:#4ade80;text-transform:uppercase;
+                   letter-spacing:.05em;margin-bottom:.4rem}
+    .daily-banner p{font-size:.85rem;color:#d1fae5;line-height:1.5}
+    .top-imps{margin:.5rem 0 0 1.25rem}
+    .top-imps li{font-size:.8rem;color:#86efac;margin-bottom:.25rem}
+    .chart-card,.table-card{background:var(--card);border:1px solid var(--border);
+                              border-radius:8px;padding:1.25rem;margin-bottom:1rem}
+    .chart-card h2,.table-card h2{font-size:.75rem;font-weight:600;color:var(--muted);margin-bottom:.75rem}
+    .chart-wrap{position:relative;height:220px}
+    .legend{display:flex;gap:1rem;font-size:.7rem;color:var(--muted);margin-bottom:.5rem;flex-wrap:wrap}
+    .dot{width:10px;height:10px;border-radius:2px;display:inline-block;margin-right:4px}
+    table{width:100%;border-collapse:collapse;font-size:.78rem}
+    th{text-align:left;padding:.45rem .6rem;color:var(--muted);
+        border-bottom:1px solid var(--border);font-weight:500;white-space:nowrap}
+    .session-row{cursor:pointer;transition:background .12s}
+    .session-row:hover{background:rgba(56,189,248,.05)}
+    td{padding:.45rem .6rem;border-bottom:1px solid rgba(255,255,255,.04);vertical-align:middle}
+    .td-date{white-space:nowrap;color:var(--muted);font-size:.72rem}
+    .td-title{max-width:280px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .td-num{text-align:right;font-variant-numeric:tabular-nums}
+    .td-pct{min-width:120px}
+    .badge{display:inline-block;font-size:.62rem;padding:1px 5px;border-radius:3px;
+             background:rgba(148,163,184,.15);color:var(--muted)}
+    .badge-cowork{background:rgba(56,189,248,.15);color:var(--accent)}
+    .badge-cli{background:rgba(168,85,247,.15);color:#c084fc}
+    .score-badge{display:inline-block;font-size:.7rem;padding:1px 6px;border-radius:4px;font-weight:600}
+    .score-none{color:var(--muted);font-size:.7rem}
+    .pct-wrap{display:flex;align-items:center;gap:5px}
+    .pct-bar{height:5px;border-radius:3px;min-width:2px}
+    .pct-lbl{font-size:.68rem;color:var(--muted);white-space:nowrap}
+    .detail-row{background:rgba(15,23,42,.5)}
+    .detail-row.hidden{display:none}
+    .detail-panel{padding:.75rem 1rem}
+    .analysis-note{font-size:.82rem;color:#bae6fd;font-style:italic;margin-bottom:.5rem}
+    .rec-header{font-size:.72rem;color:var(--accent);margin-bottom:.3rem;display:flex;align-items:center;gap:.5rem}
+    .rec-list{margin:.25rem 0 .5rem 1.25rem}
+    .rec-list li{font-size:.78rem;color:var(--text);margin-bottom:.25rem;line-height:1.4}
+    .tok-breakdown{font-size:.68rem;color:var(--muted);margin-top:.4rem}
+    .src-llm{font-size:.65rem;background:rgba(34,197,94,.15);color:#4ade80;
+               padding:1px 5px;border-radius:3px}
+    .src-heur{font-size:.65rem;background:rgba(148,163,184,.1);color:var(--muted);
+                padding:1px 5px;border-radius:3px}
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Claude Token Usage Dashboard</h1>
+  <div class="meta">
+    Data: 08 Jun 2026 12:03 UTC &nbsp;|&nbsp;
+    Generated: 08 Jun 2026 11:04 UTC &nbsp;|&nbsp;
+    Limit: ~88,000 tokens / 5-hr window
+  </div>
+</header>
+
+<div class="container">
+
+  <div class="cards">
+    <div class="card">
+      <div class="card-label">Sessions (7 days)</div>
+      <div class="card-value">0</div>
+      <div class="card-sub">0 with LLM analysis</div>
+    </div>
+    <div class="card">
+      <div class="card-label">Tokens this week</div>
+      <div class="card-value">0</div>
+      <div class="card-sub">effective (input + output + cache-create)</div>
+    </div>
+    <div class="card">
+      <div class="card-label">Windows &ge;90% limit</div>
+      <div class="card-value" style="color:#ef4444">0</div>
+      <div class="card-sub">of 2 total 5-hr windows</div>
+    </div>
+    <div class="card">
+      <div class="card-label">All-time sessions</div>
+      <div class="card-value">4</div>
+      <div class="card-sub">0 Cowork</div>
+    </div>
+  </div>
+
+  
+
+  <div class="chart-card">
+    <h2>TOKEN USAGE PER 5-HOUR WINDOW — LAST 60 DAYS</h2>
+    <div class="legend">
+      <span><span class="dot" style="background:#22c55e"></span>&lt;50% of limit</span>
+      <span><span class="dot" style="background:#eab308"></span>50–80%</span>
+      <span><span class="dot" style="background:#ef4444"></span>&ge;80%</span>
+      <span style="color:#38bdf8">— % of limit (right axis)</span>
+    </div>
+    <div class="chart-wrap"><canvas id="trendChart"></canvas></div>
+  </div>
+
+  <div class="table-card">
+    <h2>INDIVIDUAL SESSIONS — click a row to expand recommendations</h2>
+    <table>
+      <thead><tr>
+        <th>Start</th><th>Type</th><th>Session</th>
+        <th style="text-align:right">Eff.&nbsp;Tokens</th>
+        <th style="text-align:right">Output</th>
+        <th style="text-align:right">Calls</th>
+        <th>Score</th><th>% of Window</th>
+      </tr></thead>
+      <tbody>
+    <tr class="session-row" onclick="toggleRow(this)">
+      <td class="td-date">28 May 2026 13:56</td>
+      <td><span class="badge badge-cli">CLI</span> <span class="badge"><synthetic></span></td>
+      <td class="td-title" title=".">.</td>
+      <td class="td-num">0</td>
+      <td class="td-num">0</td>
+      <td class="td-num">1</td>
+      <td><span class="score-none">—</span></td>
+      <td class="td-pct"><div class="pct-wrap" title="0.0% of estimated window limit"><div class="pct-bar" style="width:0.0%;background:#22c55e"></div><span class="pct-lbl">0.0%</span></div></td>
+    </tr>
+    <tr class="detail-row hidden">
+      <td colspan="8">
+        <div class="detail-panel">
+          
+          <div class="rec-header"><span class="src-heur" title="Heuristic recommendations (no LLM analysis yet)">heuristic</span> Recommendations</div>
+          <ul class="rec-list"><li>No significant inefficiencies detected from token data alone.</li></ul>
+          <div class="tok-breakdown">
+            Input: 0 &nbsp;|&nbsp;
+            Cache created: 0 &nbsp;|&nbsp;
+            Cache read: 0 &nbsp;|&nbsp;
+            Output: 0
+          </div>
+        </div>
+      </td>
+    </tr>
+
+    <tr class="session-row" onclick="toggleRow(this)">
+      <td class="td-date">07 May 2026 09:54</td>
+      <td><span class="badge badge-cli">CLI</span> <span class="badge">sonnet-4-6</span></td>
+      <td class="td-title" title="init">init</td>
+      <td class="td-num">28,171</td>
+      <td class="td-num">4,264</td>
+      <td class="td-num">9</td>
+      <td><span class="score-none">—</span></td>
+      <td class="td-pct"><div class="pct-wrap" title="32.0% of estimated window limit"><div class="pct-bar" style="width:32.0125%;background:#22c55e"></div><span class="pct-lbl">32.0%</span></div></td>
+    </tr>
+    <tr class="detail-row hidden">
+      <td colspan="8">
+        <div class="detail-panel">
+          
+          <div class="rec-header"><span class="src-heur" title="Heuristic recommendations (no LLM analysis yet)">heuristic</span> Recommendations</div>
+          <ul class="rec-list"><li>No significant inefficiencies detected from token data alone.</li></ul>
+          <div class="tok-breakdown">
+            Input: 25 &nbsp;|&nbsp;
+            Cache created: 23,882 &nbsp;|&nbsp;
+            Cache read: 177,543 &nbsp;|&nbsp;
+            Output: 4,264
+          </div>
+        </div>
+      </td>
+    </tr>
+
+    <tr class="session-row" onclick="toggleRow(this)">
+      <td class="td-date">07 May 2026 09:35</td>
+      <td><span class="badge badge-cli">CLI</span> <span class="badge">sonnet-4-6</span></td>
+      <td class="td-title" title="Help me fix the issues reported by /doctor below. For each issue: briefly explai...">Help me fix the issues reported by /doctor below. For each issue: briefly explai...</td>
+      <td class="td-num">28,610</td>
+      <td class="td-num">3,148</td>
+      <td class="td-num">19</td>
+      <td><span class="score-none">—</span></td>
+      <td class="td-pct"><div class="pct-wrap" title="32.5% of estimated window limit"><div class="pct-bar" style="width:32.51136363636364%;background:#22c55e"></div><span class="pct-lbl">32.5%</span></div></td>
+    </tr>
+    <tr class="detail-row hidden">
+      <td colspan="8">
+        <div class="detail-panel">
+          
+          <div class="rec-header"><span class="src-heur" title="Heuristic recommendations (no LLM analysis yet)">heuristic</span> Recommendations</div>
+          <ul class="rec-list"><li>Large system prompt (~25,423 tokens). Trim CLAUDE.md and project instructions.</li></ul>
+          <div class="tok-breakdown">
+            Input: 39 &nbsp;|&nbsp;
+            Cache created: 25,423 &nbsp;|&nbsp;
+            Cache read: 428,123 &nbsp;|&nbsp;
+            Output: 3,148
+          </div>
+        </div>
+      </td>
+    </tr>
+
+    <tr class="session-row" onclick="toggleRow(this)">
+      <td class="td-date">07 May 2026 09:16</td>
+      <td><span class="badge badge-cli">CLI</span> <span class="badge">sonnet-4-6</span></td>
+      <td class="td-title" title="Create a simple html page that says "Hello Geoff"">Create a simple html page that says "Hello Geoff"</td>
+      <td class="td-num">17,410</td>
+      <td class="td-num">656</td>
+      <td class="td-num">6</td>
+      <td><span class="score-none">—</span></td>
+      <td class="td-pct"><div class="pct-wrap" title="19.8% of estimated window limit"><div class="pct-bar" style="width:19.78409090909091%;background:#22c55e"></div><span class="pct-lbl">19.8%</span></div></td>
+    </tr>
+    <tr class="detail-row hidden">
+      <td colspan="8">
+        <div class="detail-panel">
+          
+          <div class="rec-header"><span class="src-heur" title="Heuristic recommendations (no LLM analysis yet)">heuristic</span> Recommendations</div>
+          <ul class="rec-list"><li>No significant inefficiencies detected from token data alone.</li></ul>
+          <div class="tok-breakdown">
+            Input: 14 &nbsp;|&nbsp;
+            Cache created: 16,740 &nbsp;|&nbsp;
+            Cache read: 123,752 &nbsp;|&nbsp;
+            Output: 656
+          </div>
+        </div>
+      </td>
+    </tr></tbody>
+    </table>
+  </div>
+
+</div>
+
+<script>
+const ctx = document.getElementById("trendChart").getContext("2d");
+new Chart(ctx, {
+  type:"bar",
+  data:{
+    labels:["07 May 09:16", "28 May 13:56"],
+    datasets:[
+      {label:"Effective tokens",data:[74191, 0],
+        backgroundColor:["rgba(239,68,68,0.8)", "rgba(34,197,94,0.8)"],borderRadius:3,yAxisID:"y"},
+      {label:"% of limit",data:[84.3, 0.0],type:"line",
+        borderColor:"rgba(56,189,248,0.7)",backgroundColor:"transparent",
+        pointRadius:2,borderWidth:1.5,yAxisID:"y2"}
+    ]
+  },
+  options:{
+    responsive:true,maintainAspectRatio:false,
+    interaction:{mode:"index",intersect:false},
+    plugins:{
+      legend:{labels:{color:"#94a3b8",font:{size:10}}},
+      tooltip:{callbacks:{label:c=>c.dataset.label==="% of limit"
+        ?`  ${c.parsed.y.toFixed(1)}% of limit`
+        :`  ${c.parsed.y.toLocaleString()} tokens`}}
+    },
+    scales:{
+      x:{ticks:{color:"#64748b",maxRotation:45,font:{size:9}},
+           grid:{color:"rgba(255,255,255,.04)"}},
+      y:{position:"left",ticks:{color:"#64748b",font:{size:9},
+           callback:v=>v.toLocaleString()},
+           grid:{color:"rgba(255,255,255,.04)"},
+           title:{display:true,text:"Tokens",color:"#64748b",font:{size:9}},
+           suggestedMax:88000},
+      y2:{position:"right",min:0,max:100,
+           ticks:{color:"#38bdf8",font:{size:9},callback:v=>v+"%"},
+           grid:{drawOnChartArea:false},
+           title:{display:true,text:"% of limit",color:"#38bdf8",font:{size:9}}}
+    }
+  }
+});
+
+function toggleRow(row){
+  const next=row.nextElementSibling;
+  if(next&&next.classList.contains("detail-row"))
+    next.classList.toggle("hidden");
+}
+</script>
+</body></html>
