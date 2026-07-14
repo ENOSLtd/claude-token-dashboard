@@ -74,8 +74,8 @@
 <header>
   <h1>Claude Token Usage Dashboard</h1>
   <div class="meta">
-    Data: 08 Jun 2026 12:03 UTC &nbsp;|&nbsp;
-    Generated: 08 Jun 2026 11:04 UTC &nbsp;|&nbsp;
+    Data: 14 Jul 2026 14:56 UTC &nbsp;|&nbsp;
+    Generated: 14 Jul 2026 15:02 UTC &nbsp;|&nbsp;
     Limit: ~88,000 tokens / 5-hr window
   </div>
 </header>
@@ -95,13 +95,13 @@
     </div>
     <div class="card">
       <div class="card-label">Windows &ge;90% limit</div>
-      <div class="card-value" style="color:#ef4444">0</div>
-      <div class="card-sub">of 2 total 5-hr windows</div>
+      <div class="card-value" style="color:#ef4444">1</div>
+      <div class="card-sub">of 1 total 5-hr windows</div>
     </div>
     <div class="card">
       <div class="card-label">All-time sessions</div>
-      <div class="card-value">4</div>
-      <div class="card-sub">0 Cowork</div>
+      <div class="card-value">1</div>
+      <div class="card-sub">1 Cowork</div>
     </div>
   </div>
 
@@ -130,104 +130,26 @@
       </tr></thead>
       <tbody>
     <tr class="session-row" onclick="toggleRow(this)">
-      <td class="td-date">28 May 2026 13:56</td>
-      <td><span class="badge badge-cli">CLI</span> <span class="badge"><synthetic></span></td>
-      <td class="td-title" title=".">.</td>
-      <td class="td-num">0</td>
-      <td class="td-num">0</td>
-      <td class="td-num">1</td>
+      <td class="td-date">04 Jun 2026 16:20</td>
+      <td><span class="badge badge-cowork">Cowork</span> <span class="badge">sonnet-4-6</span></td>
+      <td class="td-title" title="Cowork · 2026-06-04 16:20">Cowork · 2026-06-04 16:20</td>
+      <td class="td-num">724,103</td>
+      <td class="td-num">168,424</td>
+      <td class="td-num">194</td>
       <td><span class="score-none">—</span></td>
-      <td class="td-pct"><div class="pct-wrap" title="0.0% of estimated window limit"><div class="pct-bar" style="width:0.0%;background:#22c55e"></div><span class="pct-lbl">0.0%</span></div></td>
+      <td class="td-pct"><div class="pct-wrap" title="100.0% of estimated window limit"><div class="pct-bar" style="width:100%;background:#ef4444"></div><span class="pct-lbl">100.0%</span></div></td>
     </tr>
     <tr class="detail-row hidden">
       <td colspan="8">
         <div class="detail-panel">
           
           <div class="rec-header"><span class="src-heur" title="Heuristic recommendations (no LLM analysis yet)">heuristic</span> Recommendations</div>
-          <ul class="rec-list"><li>No significant inefficiencies detected from token data alone.</li></ul>
+          <ul class="rec-list"><li>Large system prompt (~555,313 tokens). Trim CLAUDE.md and project instructions.</li><li>High tool-call count (194). Batch related requests and be more specific.</li><li>Very large session. Break complex tasks into smaller focused conversations.</li></ul>
           <div class="tok-breakdown">
-            Input: 0 &nbsp;|&nbsp;
-            Cache created: 0 &nbsp;|&nbsp;
-            Cache read: 0 &nbsp;|&nbsp;
-            Output: 0
-          </div>
-        </div>
-      </td>
-    </tr>
-
-    <tr class="session-row" onclick="toggleRow(this)">
-      <td class="td-date">07 May 2026 09:54</td>
-      <td><span class="badge badge-cli">CLI</span> <span class="badge">sonnet-4-6</span></td>
-      <td class="td-title" title="init">init</td>
-      <td class="td-num">28,171</td>
-      <td class="td-num">4,264</td>
-      <td class="td-num">9</td>
-      <td><span class="score-none">—</span></td>
-      <td class="td-pct"><div class="pct-wrap" title="32.0% of estimated window limit"><div class="pct-bar" style="width:32.0125%;background:#22c55e"></div><span class="pct-lbl">32.0%</span></div></td>
-    </tr>
-    <tr class="detail-row hidden">
-      <td colspan="8">
-        <div class="detail-panel">
-          
-          <div class="rec-header"><span class="src-heur" title="Heuristic recommendations (no LLM analysis yet)">heuristic</span> Recommendations</div>
-          <ul class="rec-list"><li>No significant inefficiencies detected from token data alone.</li></ul>
-          <div class="tok-breakdown">
-            Input: 25 &nbsp;|&nbsp;
-            Cache created: 23,882 &nbsp;|&nbsp;
-            Cache read: 177,543 &nbsp;|&nbsp;
-            Output: 4,264
-          </div>
-        </div>
-      </td>
-    </tr>
-
-    <tr class="session-row" onclick="toggleRow(this)">
-      <td class="td-date">07 May 2026 09:35</td>
-      <td><span class="badge badge-cli">CLI</span> <span class="badge">sonnet-4-6</span></td>
-      <td class="td-title" title="Help me fix the issues reported by /doctor below. For each issue: briefly explai...">Help me fix the issues reported by /doctor below. For each issue: briefly explai...</td>
-      <td class="td-num">28,610</td>
-      <td class="td-num">3,148</td>
-      <td class="td-num">19</td>
-      <td><span class="score-none">—</span></td>
-      <td class="td-pct"><div class="pct-wrap" title="32.5% of estimated window limit"><div class="pct-bar" style="width:32.51136363636364%;background:#22c55e"></div><span class="pct-lbl">32.5%</span></div></td>
-    </tr>
-    <tr class="detail-row hidden">
-      <td colspan="8">
-        <div class="detail-panel">
-          
-          <div class="rec-header"><span class="src-heur" title="Heuristic recommendations (no LLM analysis yet)">heuristic</span> Recommendations</div>
-          <ul class="rec-list"><li>Large system prompt (~25,423 tokens). Trim CLAUDE.md and project instructions.</li></ul>
-          <div class="tok-breakdown">
-            Input: 39 &nbsp;|&nbsp;
-            Cache created: 25,423 &nbsp;|&nbsp;
-            Cache read: 428,123 &nbsp;|&nbsp;
-            Output: 3,148
-          </div>
-        </div>
-      </td>
-    </tr>
-
-    <tr class="session-row" onclick="toggleRow(this)">
-      <td class="td-date">07 May 2026 09:16</td>
-      <td><span class="badge badge-cli">CLI</span> <span class="badge">sonnet-4-6</span></td>
-      <td class="td-title" title="Create a simple html page that says "Hello Geoff"">Create a simple html page that says "Hello Geoff"</td>
-      <td class="td-num">17,410</td>
-      <td class="td-num">656</td>
-      <td class="td-num">6</td>
-      <td><span class="score-none">—</span></td>
-      <td class="td-pct"><div class="pct-wrap" title="19.8% of estimated window limit"><div class="pct-bar" style="width:19.78409090909091%;background:#22c55e"></div><span class="pct-lbl">19.8%</span></div></td>
-    </tr>
-    <tr class="detail-row hidden">
-      <td colspan="8">
-        <div class="detail-panel">
-          
-          <div class="rec-header"><span class="src-heur" title="Heuristic recommendations (no LLM analysis yet)">heuristic</span> Recommendations</div>
-          <ul class="rec-list"><li>No significant inefficiencies detected from token data alone.</li></ul>
-          <div class="tok-breakdown">
-            Input: 14 &nbsp;|&nbsp;
-            Cache created: 16,740 &nbsp;|&nbsp;
-            Cache read: 123,752 &nbsp;|&nbsp;
-            Output: 656
+            Input: 366 &nbsp;|&nbsp;
+            Cache created: 555,313 &nbsp;|&nbsp;
+            Cache read: 18,646,842 &nbsp;|&nbsp;
+            Output: 168,424
           </div>
         </div>
       </td>
@@ -242,11 +164,11 @@ const ctx = document.getElementById("trendChart").getContext("2d");
 new Chart(ctx, {
   type:"bar",
   data:{
-    labels:["07 May 09:16", "28 May 13:56"],
+    labels:["04 Jun 16:20"],
     datasets:[
-      {label:"Effective tokens",data:[74191, 0],
-        backgroundColor:["rgba(239,68,68,0.8)", "rgba(34,197,94,0.8)"],borderRadius:3,yAxisID:"y"},
-      {label:"% of limit",data:[84.3, 0.0],type:"line",
+      {label:"Effective tokens",data:[724103],
+        backgroundColor:["rgba(239,68,68,0.8)"],borderRadius:3,yAxisID:"y"},
+      {label:"% of limit",data:[100],type:"line",
         borderColor:"rgba(56,189,248,0.7)",backgroundColor:"transparent",
         pointRadius:2,borderWidth:1.5,yAxisID:"y2"}
     ]
