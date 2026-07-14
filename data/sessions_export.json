@@ -1,37 +1,25 @@
 {
-    "exported_at":  "2026-06-08T12:04:13.7834682+01:00",
+    "exported_at":  "2026-07-14T10:36:15.3055129+01:00",
     "estimated_limit":  88000,
     "days_exported":  90,
-    "session_count":  4,
+    "session_count":  2,
     "sessions":  [
                      {
-                         "session_id":  "2b4df636-4a56-4850-bb75-aca6f057cd68",
+                         "session_id":  "08b53aa1-e42f-4f78-81de-8c42f0880f10",
                          "type":  "claude_code",
-                         "title":  "Help me fix the issues reported by /doctor below. For each issue: briefly explai...",
-                         "start_time":  "2026-05-07T09:35:51.101Z",
-                         "model":  "claude-sonnet-4-6",
-                         "input_tokens":  39,
-                         "output_tokens":  3148,
-                         "cache_create":  25423,
-                         "cache_read":  428123,
-                         "api_calls":  19
-                     },
-                     {
-                         "session_id":  "cfcf7524-686a-45e8-84aa-a4c35b763442",
-                         "type":  "claude_code",
-                         "title":  "Create a simple html page that says \"Hello Geoff\"",
-                         "start_time":  "2026-05-07T09:16:53.669Z",
-                         "model":  "claude-sonnet-4-6",
-                         "input_tokens":  14,
-                         "output_tokens":  656,
-                         "cache_create":  16740,
-                         "cache_read":  123752,
-                         "api_calls":  6
+                         "title":  "Users Geoff · 2026-06-10 19:24",
+                         "start_time":  "2026-06-10T19:24:52.535Z",
+                         "model":  "\u003csynthetic\u003e",
+                         "input_tokens":  2,
+                         "output_tokens":  14,
+                         "cache_create":  15058,
+                         "cache_read":  22007,
+                         "api_calls":  3
                      },
                      {
                          "session_id":  "e52a8714-0aa0-41fc-a1cb-e0c244440588",
                          "type":  "claude_code",
-                         "title":  ".",
+                         "title":  "Users Geoff · 2026-05-28 13:56",
                          "start_time":  "2026-05-28T13:56:59.539Z",
                          "model":  "\u003csynthetic\u003e",
                          "input_tokens":  0,
@@ -39,18 +27,6 @@
                          "cache_create":  0,
                          "cache_read":  0,
                          "api_calls":  1
-                     },
-                     {
-                         "session_id":  "ca3fbf6f-221d-4934-8b49-7e362283b144",
-                         "type":  "claude_code",
-                         "title":  "init",
-                         "start_time":  "2026-05-07T09:54:40.890Z",
-                         "model":  "claude-sonnet-4-6",
-                         "input_tokens":  25,
-                         "output_tokens":  4264,
-                         "cache_create":  23882,
-                         "cache_read":  177543,
-                         "api_calls":  9
                      }
                  ]
 }
