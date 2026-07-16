@@ -1,12 +1,12 @@
 {
   "date": "2026-07-16",
-  "generated_at": "2026-07-16T08:37:00Z",
+  "generated_at": "2026-07-16T23:10:03Z",
   "session_count": 0,
   "transcript_access": false,
   "sessions": [],
-  "daily_summary": "No session data was available for analysis. The data/sessions_export.json file was absent from the repository; the most recent export commit was dated 2026-07-14, so no session activity has been exported within the last 24 hours (the exporter deletes the export after processing by design, and none has been pushed since). Nothing to analyse for this window.",
+  "daily_summary": "No session data was available for analysis. The data/sessions_export.json file was absent from the repository, so no sessions could be assessed for the last-24h window. The most recent export commit is dated 2026-07-14; the exporter deletes the export after processing by design, and none has been pushed since, so there is nothing to analyse for this window.",
   "top_improvements": [
-    "Confirm the desktop session exporter is running on schedule \u2014 no sessions_export.json has been pushed since 2026-07-14, so nightly analysis has had no input for the past two days.",
-    "Consider having the exporter write an empty sessions_export.json (rather than deleting it) so the analyser can distinguish 'exporter offline' from 'exporter ran, zero sessions'."
+    "Confirm the desktop session exporter is running on schedule — no sessions_export.json has been pushed since 2026-07-14, so nightly analysis has had no input for two consecutive days.",
+    "Have the exporter write an empty sessions_export.json (rather than deleting it) so the analyser can distinguish 'exporter offline' from 'exporter ran, zero sessions'."
   ]
 }
