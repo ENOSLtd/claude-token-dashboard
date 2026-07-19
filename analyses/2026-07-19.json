@@ -1,0 +1,12 @@
+{
+  "date": "2026-07-19",
+  "generated_at": "2026-07-19T23:10:03Z",
+  "session_count": 0,
+  "transcript_access": false,
+  "sessions": [],
+  "daily_summary": "No session data was available for analysis. The data/sessions_export.json file is still absent from the repository, so no sessions could be assessed for the last-24h window. This is the fifth consecutive day with no export (last export commit dated 2026-07-14); nightly runs 07-15 through 07-19 have all processed zero input.",
+  "top_improvements": [
+    "Fix the desktop session exporter — no sessions_export.json has been pushed since 2026-07-14, so five consecutive nightly analyser runs (07-15 through 07-19) have had no input. Verify the PowerShell exporter / scheduled task is still enabled and running on the desktop, and check for auth or path errors in its logs.",
+    "Have the exporter always write sessions_export.json (with an explicit session list and exported_at timestamp) even when there are zero sessions, so the analyser can distinguish 'exporter offline' from 'exporter ran, no sessions today'. A five-day silent gap should have surfaced an alert before now."
+  ]
+}
