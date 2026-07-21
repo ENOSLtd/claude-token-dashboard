@@ -1,12 +1,12 @@
 {
   "date": "2026-07-21",
-  "generated_at": "2026-07-21T00:20:06Z",
+  "generated_at": "2026-07-21T23:09:33Z",
   "session_count": 0,
   "transcript_access": false,
   "sessions": [],
-  "daily_summary": "No session data was available for analysis. The data/sessions_export.json file is still absent from the repository, so no sessions could be assessed for the last-24h window. This is the seventh consecutive day with no export (last export commit dated 2026-07-14); nightly runs 07-15 through 07-21 have all processed zero input.",
+  "daily_summary": "No session data was available for analysis. The data/sessions_export.json file is absent from the repository, so no sessions could be assessed for the last-24h window. The most recent data export commit is dated 2026-07-14, meaning seven consecutive days (07-15 through 07-21) have produced no input for the nightly analyser.",
   "top_improvements": [
-    "Fix the desktop session exporter — no sessions_export.json has been pushed since 2026-07-14, meaning seven consecutive nightly analyser runs (07-15 through 07-21) have had no input. Verify the exporter / scheduled task is still enabled and running on the desktop, and check its logs for auth or path errors.",
-    "Have the exporter always write sessions_export.json (with an explicit session list and exported_at timestamp) even when there are zero sessions, so the analyser can distinguish 'exporter offline' from 'exporter ran, no sessions today'. A week-long silent gap should have triggered an alert well before now."
+    "Fix the desktop session exporter: no sessions_export.json has been committed since 2026-07-14, so seven consecutive nightly analyser runs (07-15 through 07-21) have had zero input. Verify the exporter/scheduled task is still enabled on the desktop and check its logs for auth or path errors.",
+    "Have the exporter always write sessions_export.json (with an explicit session list and exported_at timestamp) even on zero-session days, so the analyser can distinguish 'exporter offline' from 'exporter ran, no sessions today'. A week-long silent gap should trigger an alert."
   ]
 }
