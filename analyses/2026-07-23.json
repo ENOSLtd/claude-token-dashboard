@@ -1,0 +1,12 @@
+{
+  "date": "2026-07-23",
+  "generated_at": "2026-07-23T23:10:00Z",
+  "session_count": 0,
+  "transcript_access": false,
+  "sessions": [],
+  "daily_summary": "No session data was available for analysis. The data/sessions_export.json file is absent from the repository, so no sessions could be assessed for the last-24h window. The most recent data export predates 2026-07-15, meaning nine consecutive days (07-15 through 07-23) have now produced no input for the nightly analyser.",
+  "top_improvements": [
+    "Fix the desktop session exporter: no sessions_export.json has been committed since 2026-07-14, so nine consecutive nightly analyser runs (07-15 through 07-23) have had zero input. Verify the exporter/scheduled task is still enabled on the desktop and check its logs for auth, network, or path errors.",
+    "Have the exporter always write sessions_export.json (with an explicit session list and exported_at timestamp) even on zero-session days, so the analyser can distinguish 'exporter offline' from 'exporter ran, no sessions today'. A nine-day silent gap warrants an alert."
+  ]
+}
