@@ -1,0 +1,11 @@
+{
+  "date": "2026-07-25",
+  "generated_at": "2026-07-25T23:09:29Z",
+  "session_count": 0,
+  "transcript_access": false,
+  "sessions": [],
+  "daily_summary": "No session data was available for analysis today. The expected data file data/sessions_export.json was not present in the repository (the data/ directory contained only a .gitkeep placeholder), so no sessions could be evaluated for the trailing 24-hour window.",
+  "top_improvements": [
+    "Ensure the upstream export job that produces data/sessions_export.json runs and commits before this nightly analysis routine fires, otherwise every run will record zero sessions."
+  ]
+}
