@@ -1,0 +1,12 @@
+{
+  "date": "2026-07-27",
+  "generated_at": "2026-07-27T23:10:00Z",
+  "session_count": 0,
+  "transcript_access": false,
+  "sessions": [],
+  "daily_summary": "No session data was available for analysis today. The expected data file data/sessions_export.json was not present in the repository (the data/ directory contained only a .gitkeep placeholder), so no sessions could be evaluated for the trailing 24-hour window. This is the third consecutive day the export has been missing (2026-07-25, 2026-07-26, and today).",
+  "top_improvements": [
+    "Fix the upstream export job that should produce data/sessions_export.json before this nightly routine fires; it has now failed to deliver data three days running, so every analysis record since 2026-07-25 is empty.",
+    "Add a monitoring alert (or a non-zero exit in the export step) for a missing or empty data/sessions_export.json so the broken pipeline is surfaced proactively instead of only being inferred from repeated zero-session analyses."
+  ]
+}
