@@ -1,0 +1,12 @@
+{
+  "date": "2026-07-30",
+  "generated_at": "2026-07-30T23:10:12Z",
+  "session_count": 0,
+  "transcript_access": false,
+  "sessions": [],
+  "daily_summary": "No session data was available for analysis today. The expected input file data/sessions_export.json was still absent from the repository (data/ contained only a .gitkeep placeholder), so no sessions could be assessed for the trailing 24-hour window. This continues an unbroken gap that began on 2026-07-14; every nightly analyser run for roughly the last 16 days has had zero input, so this is another empty record in a long-running outage rather than a genuine zero-activity day.",
+  "top_improvements": [
+    "Fix the upstream session exporter as the top priority: no data/sessions_export.json has reached this repo since 2026-07-14, meaning ~16 consecutive nightly analyser runs have produced no efficiency insight. Confirm the exporter/scheduled task is still enabled and inspect its logs for auth, network, or output-path errors.",
+    "Make the exporter always commit sessions_export.json (with an explicit session list and an exported_at timestamp) even on zero-session days, and add a staleness alert when the file is missing or older than ~24h, so 'exporter offline' is clearly distinguished from 'exporter ran, no sessions today' instead of being inferred from a growing run of identical empty analyses."
+  ]
+}
